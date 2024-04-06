@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Check for input file
+if [ -z "$1" ]; then
+  echo "Usage: factors <file>"
+  exit 1
+fi
+
+# Read numbers from the file
+while read -r number; do
+  # Find a divisor (i) and its corresponding quotient
+  for (( i=2; i*i <= number; i++ )); do 
+    if (( number % i == 0 )); then
+      quotient=$(( number / i )) 
+      echo "$number=$i*$quotient"
+      break # Move to the next number
+    fi
+  done
+done < "$1"
+/usr/bin/time -f "\nreal\t%E\nuser\t%U\nsys\t%S" $0 $1
